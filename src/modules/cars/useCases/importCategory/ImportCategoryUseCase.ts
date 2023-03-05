@@ -1,5 +1,6 @@
-import { parse as csvParse } from "csv-parse";
 import fs from "fs";
+import { parse as cvsParse } from "csv-parse";
+
 import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 
 interface IImportCategory {
@@ -15,8 +16,7 @@ class ImportCategoryUseCase {
             const stream = fs.createReadStream(file.path);
             const categories: IImportCategory[] = [];
 
-            const parseFile = csvParse();
-
+            const parseFile = cvsParse();
             stream.pipe(parseFile);
 
             parseFile
@@ -41,7 +41,7 @@ class ImportCategoryUseCase {
     async execute(file: Express.Multer.File): Promise<void> {
         const categories = await this.loadCategories(file);
 
-        categories.map((category) => {
+        categories.map(async (category) => {
             const { name, description } = category;
 
             const existCategory = this.categoriesRepository.findByName(name);

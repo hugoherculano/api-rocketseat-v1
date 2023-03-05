@@ -1,3 +1,9 @@
 node_modules
 index.js
 newTest.js
+
+database
+.dockerignore
+Dockerfile
+docker-compose.yml
+ormconfig.json
